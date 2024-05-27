@@ -1,4 +1,4 @@
-version: "3.9"
+name: picpay-challenge
 services:
   web:
     build: services/frontend
@@ -6,12 +6,12 @@ services:
       - "5000:5000"
     networks:
       - frontend
-      - backend
   reader:
     build: services/reader
     ports:
       - "8081:8081"
     networks:
+      - backend
       - frontend
   writer:
     build: services/writer
@@ -19,8 +19,12 @@ services:
       - "8080:8080"
     networks:
       - backend
-  reids:
+      - frontend
+  redis:
     image: "redis:alpine"
+    networks:
+      - backend
 
 networks:
   backend:
+  frontend:
