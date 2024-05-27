@@ -1,6 +1,5 @@
 import http.server
 import socketserver
-import json
 import redis
 
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -34,7 +33,12 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             redishost = "redis"
-            redisclient = redis.Redis(host=redishost)
+            redisclient = redis.Redis(
+                host=redishost,
+                port=6379,
+                charset="utf-8",
+                decode_responses=True
+            )
             redisclient.set("SHAREDKEY",post_data.decode('utf-8'))
 
 
