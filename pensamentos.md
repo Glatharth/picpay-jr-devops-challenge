@@ -1,4 +1,7 @@
 A primeira coisa que eu fiz foi verificar o docker-compose e arrumar todos os problemas que consegui identificar sem verificar os outros arquivos.
+
 O segundo passo foi verificar cada aplicação e com isso eu consegui identificar um problema de porta na aplicação **writer** e com isso eu arrumei as portas de todas as aplicações com o docker-compose. Eu percebi que o python estava importando uma biblioteca que precisava ser instalada com o pip, então eu pesquisei como funciona o requirements.txt e gerei esse arquivo com as bibliotecas que precisavam, que no caso era apenas o redis. O proximo passo foi verificar os erros que meu editor estava apontando e consegui identificar que a conexão com o redis estava incorreta, após arrumar a aplicação funcionou perfeitamente.
+
 O terceiro passo eu segui basicamente a mesma linha que o segundo, mas como estou mais familiarizado com o golang eu não precisei fazer nenhuma pesquisa, apenas como é o padrão de dockerfile e arrumar o codigo que estava com erro.
+
 O quarto passo foi o mais simples, pois eu apenas precisei entrar no navegador para identificar que não estava tendo nenhuma conexão com o docker, então eu verifiquei os logs e percebi que a aplicação estava conectando na porta padrão do node, que é a 3000. Com essa informação eu pesquisei sobre o framework serve e descobri que ele tem um parametro para mudar a porta, após alterar o package.json, ele continuava com o mesmo problema e percebi que o dockerfile estava errado, ele não estava puxando o **_npm run start_**, apenas o **_serve_**.
