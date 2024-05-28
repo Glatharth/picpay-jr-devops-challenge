@@ -1,6 +1,9 @@
 FROM golang:1.16
-WORKDIR /go/src/github.com/PicPay/picpay-jr-devops-challenge/services/go
-ADD . /go/src/github.com/PicPay/picpay-jr-devops-challenge/services/go
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
+ADD . .
+RUN go build -v -o /usr/local/bin/app
 
 EXPOSE 8080
-CMD ["go","run","main.go"]
+CMD ["app"]
